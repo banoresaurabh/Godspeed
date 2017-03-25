@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Godspeed</string>
+    <string name="action_settings">Settings</string>
+    <string name="Theory_of_computation">Theory of computation</string>
+    <string name="advance_java">Advance java</string>
+    <string name="centerText">%1$s%</string>
 </resources>

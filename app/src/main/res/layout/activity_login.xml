@@ -7,10 +7,61 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="#0091EA"
     tools:context="com.example.root.godspeed.LoginActivity">
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Godspeed"
+        android:id="@+id/heading"
+        android:layout_marginTop="71dp"
+        android:layout_marginBottom="15dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:textColor="#fff"
+        android:textSize="60dp"/>
+
+    <EditText
+        android:layout_width="250dp"
+        android:layout_height="45dp"
+        android:background="#fff"
+        android:id="@+id/userid"
+        android:hint="Enter User ID"
+        android:layout_alignTop="@+id/heading"
+        android:layout_centerHorizontal="true"
+        android:textSize="14dp"
+        android:layout_marginTop="124dp" />
+
+    <EditText
+        android:layout_width="250dp"
+        android:layout_height="45dp"
+        android:inputType="textPassword"
+        android:ems="10"
+        android:background="#ffff"
+        android:id="@+id/editText"
+        android:hint="Enter Password"
+        android:layout_centerVertical="true"
+        android:textSize="14dp"
+        android:layout_centerHorizontal="true" />
+
+
+
+
+    <Button
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:text="Hello World!" />
+        android:text="Submit"
+        android:id="@+id/sbtBtn"
+        android:layout_marginTop="58dp"
+        android:layout_below="@+id/editText"
+        android:layout_centerHorizontal="true"
+        android:background="#FFC400"
+        android:textColor="#fff"
+        android:elevation="8dp"
+        android:textSize="16dp"
+        />
+
 </RelativeLayout>
