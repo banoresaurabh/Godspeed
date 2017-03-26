@@ -86,24 +86,33 @@ public class Landing extends AppCompatActivity {
        }
 
        public void updateUI(ArrayList<Report> report){
+           String subTypeName = "";
            CardGenerator cardGenerator = new CardGenerator();
            Log.e("--UPDATEUI--"," "+report.size());
-           cardGenerator.linearLayoutMain = (LinearLayout) findViewById(R.id.mainLL);
+           cardGenerator.linearLayoutMain = (LinearLayout) findViewById(R.id.LLInner);
+
 
 
         for (int i = 0; i < report.size(); i++){
 
             if(report.get(i).subject.trim().equalsIgnoreCase("VERDICT")){
+                subTypeName += "( "+report.get(i).theory.get(0) +"/" +report.get(i).theory.get(1) + " )\n";
+                subTypeName += "   Theory";
+
                 Log.d("--IN LANDING--"," "+report.get(i).theory.size() + " --> "+ i);
                 cardGenerator.generateCard(report.get(i).subject,getApplicationContext());
+                cardGenerator.textForType.setText(subTypeName);
                 String textInCenter = "";
                 textInCenter += report.get(i).theory.get(2).toString() + " %";
-//               Integer progress = (Integer) (report.get(i).theory.get(2));
+//                 Integer progress = (Integer) (report.get(i).theory.get(2));
                 cardGenerator.progressBarFor.setProgress(60);
                 cardGenerator.textInTheCenter.setText(textInCenter);
 
                 textInCenter = "";
-
+                subTypeName = "";
+                subTypeName += "  ( "+report.get(i).practical.get(0) +"/" +report.get(i).practical.get(1) + " )\n";
+                subTypeName += "  Practical";
+                cardGenerator.textForTypePR.setText(subTypeName);
                 textInCenter += report.get(i).practical.get(2).toString() + " %";
                 //             progress = (Integer) report.get(i).practical.get(2);
                 cardGenerator.progressBarForPR.setProgress(90);
@@ -126,9 +135,17 @@ public class Landing extends AppCompatActivity {
 //               Integer progress = (Integer) (report.get(i).theory.get(2));
                        cardGenerator.progressBarFor.setProgress(60);
                        cardGenerator.textInTheCenter.setText(textInCenter);
+                       subTypeName = "";
+                       subTypeName += "( "+report.get(i).theory.get(0) +"/" +report.get(i).theory.get(1) + " )\n";
+                       subTypeName += "  Theory";
+                       cardGenerator.textForType.setText(subTypeName);
+
 
                        textInCenter = "";
-
+                       subTypeName = "";
+                       subTypeName += "  ( "+report.get(i).practical.get(0) +"/" +report.get(i).practical.get(1) + " )\n";
+                       subTypeName += " Practical";
+                       cardGenerator.textForTypePR.setText(subTypeName);
                        textInCenter += report.get(i).practical.get(2).toString() + " %";
                        //             progress = (Integer) report.get(i).practical.get(2);
                        cardGenerator.progressBarForPR.setProgress(90);

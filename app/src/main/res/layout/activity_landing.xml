@@ -8,11 +8,6 @@
     tools:context="com.example.root.godspeed.Landing">
 
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/scrollView"
-        android:layout_gravity="center_horizontal">
 
                 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:tools="http://schemas.android.com/tools"
@@ -25,7 +20,9 @@
                     <FrameLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:elevation="24dp">
+                        android:clipToPadding="false"
+                        android:background="@color/White"
+                        >
                         <ImageView
                             android:layout_width="match_parent"
                             android:layout_height="175dp"
@@ -56,8 +53,34 @@
                             android:id="@+id/welMsg"
                             />
                     </FrameLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="10dp"
+                        android:orientation="horizontal"
+                        android:background="#26A69A"
+                        android:elevation="30dp"
+                        />
+
+                    <ScrollView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:id="@+id/scrollView"
+                        android:layout_gravity="center_horizontal">
+                        <LinearLayout
+                            xmlns:android="http://schemas.android.com/apk/res/android"
+                            xmlns:tools="http://schemas.android.com/tools"
+                            android:orientation="vertical"
+                            android:layout_width="match_parent"
+                            android:id="@+id/LLInner"
+                            android:layout_height="match_parent"
+                            android:elevation="12dp"
+                            tools:context="com.example.root.godspeed.Landing">
 
 
-            </LinearLayout>
-        </ScrollView>>
+                        </LinearLayout>
+
+
+                    </ScrollView>
+
+                </LinearLayout>
 </LinearLayout>

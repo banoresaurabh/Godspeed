@@ -28,15 +28,14 @@ public class CardGenerator {
     ProgressBar progressBarBackPR;
     ProgressBar progressBarForPR;
     TextView textForTypePR;
-
+    public String subTypeName = "";
     public void generateCard(String cardName, Context context){
-
         //--------------------------------------------Preparing The card--------------------------------------------------------//
         CardView cv1 = new CardView(context);
         cv1.setMaxCardElevation(8);
-        params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 400);
-        int margin = 10;
-        params.setMargins(12,margin,12,margin);
+        params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 470);
+        int margin = 15;
+        params.setMargins(16,margin,16,margin);
         cv1.setLayoutParams(params);
         cv1.setContentPadding(2, 1, 2, 1);
         cv1.setCardElevation(9);
@@ -46,7 +45,7 @@ public class CardGenerator {
         TextView tv = new TextView(context);
         params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT);
         tv.setLayoutParams(params);
-        tv.setBackgroundColor(Color.parseColor("#64B5F6"));
+        tv.setBackground(context.getResources().getDrawable(R.drawable.yellowgradient));
         tv.setText(cardName);
         tv.setTextSize(18);
         tv.setGravity(Gravity.CENTER);
@@ -89,18 +88,19 @@ public class CardGenerator {
         rParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
         rParams.addRule(RelativeLayout.CENTER_VERTICAL);
         textInTheCenter.setLayoutParams(rParams);
-        textInTheCenter.setTextColor(Color.parseColor("#D32F2F"));
+        textInTheCenter.setTextColor(Color.parseColor("#78909c"));
         textInTheCenter.setTextSize(25);
         textInTheCenter.setText(R.string.centerText);
         //-------------------------------------------------Subject Type text-----------------------------------------------------------//
         textForType = new TextView(context);
+        textForType.setId(textForType.generateViewId());
         rParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,RelativeLayout.LayoutParams.WRAP_CONTENT);
-        textForType.setText("Theory");
         rParams.setMargins(0,0,0,5);
         rParams.addRule(RelativeLayout.ALIGN_BOTTOM,progressBarFor.getId());
         rParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
         textForType.setLayoutParams(rParams);
         textForType.setTextColor(Color.parseColor("#ff8f00"));
+        textForType.setText(R.string.subTypeText);
 
 
         //---------------------------------------------progresss bars 2---------------------------------------------------------------//
@@ -136,18 +136,20 @@ public class CardGenerator {
         rParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
         rParams.addRule(RelativeLayout.CENTER_VERTICAL);
         textInTheCenterPR.setLayoutParams(rParams);
-        textInTheCenterPR.setTextColor(Color.parseColor("#D32F2F"));
+        textInTheCenterPR.setTextColor(Color.parseColor("#78909c"));
         textInTheCenterPR.setTextSize(25);
         textInTheCenterPR.setText(R.string.centerText);
 
         textForTypePR = new TextView(context);
+        textForTypePR.setId(textForTypePR.generateViewId());
         rParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,RelativeLayout.LayoutParams.WRAP_CONTENT);
-        textForTypePR.setText("Practical");
+        textForTypePR.setText(subTypeName);
         rParams.setMargins(0,0,0,5);
         rParams.addRule(RelativeLayout.ALIGN_BOTTOM,progressBarForPR.getId());
         rParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
         textForTypePR.setLayoutParams(rParams);
         textForTypePR.setTextColor(Color.parseColor("#ff8f00"));
+        textForTypePR.setText(R.string.subTypeText);
         //------------------------------------------------Adding views to parents----------------------------------------------------//
         relativeLayoutForBars.addView(progressBarBack);
         relativeLayoutForBars.addView(progressBarFor);
@@ -241,7 +243,7 @@ public class CardGenerator {
         //-------------------------------------------------Subject Type text-----------------------------------------------------------//
         textForType = new TextView(context);
         rParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,RelativeLayout.LayoutParams.WRAP_CONTENT);
-        textForType.setText("Theory");
+
         rParams.setMargins(0,0,0,5);
         rParams.addRule(RelativeLayout.ALIGN_BOTTOM,progressBarFor.getId());
         rParams.addRule(RelativeLayout.CENTER_HORIZONTAL);

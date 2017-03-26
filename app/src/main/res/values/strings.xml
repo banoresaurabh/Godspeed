@@ -4,4 +4,5 @@
     <string name="Theory_of_computation">Theory of computation</string>
     <string name="advance_java">Advance java</string>
     <string name="centerText">%1$s%</string>
+    <string name="subTypeText">%1$s</string>
 </resources>
