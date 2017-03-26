@@ -37,27 +37,6 @@ public class Landing extends AppCompatActivity {
         propic.setImageDrawable(roundedImage);
         LoadDataFromTheScraper task = new LoadDataFromTheScraper();
         task.execute();
-       /* cardGenerator= new CardGenerator();
-
-
-
-        cardGenerator.linearLayoutMain = (LinearLayout) findViewById(R.id.mainLL);
-        cardGenerator.generateCard("hey",this);
-
-
-        Double AJ_theory = 65.15;
-        String AJ_theoryS = AJ_theory.toString();
-        AJ_theoryS += " %";
-        cardGenerator.progressBarFor.setProgress(65);
-        cardGenerator.textInTheCenter.setText(AJ_theoryS);
-
-        Double AJ_prac = 90.78;
-        String AJ_pracS = AJ_prac.toString();
-        AJ_pracS += " %";
-        cardGenerator.progressBarForPR.setProgress(90);
-        cardGenerator.textInTheCenterPR.setText(AJ_pracS);
-       */
-
     }
 
    private class LoadDataFromTheScraper extends AsyncTask<String,Void,ArrayList<Report>>{
@@ -94,7 +73,6 @@ public class Landing extends AppCompatActivity {
 
 
         for (int i = 0; i < report.size(); i++){
-
             if(report.get(i).subject.trim().equalsIgnoreCase("VERDICT")){
                 subTypeName += "( "+report.get(i).theory.get(0) +"/" +report.get(i).theory.get(1) + " )\n";
                 subTypeName += "   Theory";
@@ -126,7 +104,6 @@ public class Landing extends AppCompatActivity {
 
 
            for(int i = 0; i < report.size(); i++) {
-
                if (!report.get(i).subject.equalsIgnoreCase("VERDICT")) {
                    if (report.get(i).theory.size() > 0 && report.get(i).practical.size() > 0) {
                        cardGenerator.generateCard(report.get(i).subject, getApplicationContext());
@@ -150,6 +127,32 @@ public class Landing extends AppCompatActivity {
                        //             progress = (Integer) report.get(i).practical.get(2);
                        cardGenerator.progressBarForPR.setProgress(90);
                        cardGenerator.textInTheCenterPR.setText(textInCenter);
+                   }else {
+                       if(report.get(i).theory.size() > 0 && report.get(i).practical.size() == 0){
+                           cardGenerator.generateCardForSingle(report.get(i).subject, getApplicationContext(),"th");
+                           String textInCenter = "";
+                           textInCenter += report.get(i).theory.get(2).toString() + " %";
+//               Integer progress = (Integer) (report.get(i).theory.get(2));
+                           cardGenerator.progressBarFor.setProgress(60);
+                           cardGenerator.textInTheCenter.setText(textInCenter);
+                           subTypeName = "";
+                           subTypeName += "( "+report.get(i).theory.get(0) +"/" +report.get(i).theory.get(1) + " )\n";
+                           subTypeName += "  Theory";
+                           cardGenerator.textForType.setText(subTypeName);
+
+                       }else{
+                           cardGenerator.generateCardForSingle(report.get(i).subject, getApplicationContext(),"pr");
+                           String textInCenter = "";
+                           subTypeName = "";
+                           subTypeName += "  ( "+report.get(i).practical.get(0) +"/" +report.get(i).practical.get(1) + " )\n";
+                           subTypeName += " Practical";
+                           cardGenerator.textForTypePR.setText(subTypeName);
+                           textInCenter += report.get(i).practical.get(2).toString() + " %";
+                           //             progress = (Integer) report.get(i).practical.get(2);
+                           cardGenerator.progressBarForPR.setProgress(90);
+                           cardGenerator.textInTheCenterPR.setText(textInCenter);
+                           cardGenerator.textForType.setText("Theory");
+                       }
                    }
                }
            }
