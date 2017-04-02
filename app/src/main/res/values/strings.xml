@@ -5,4 +5,13 @@
     <string name="advance_java">Advance java</string>
     <string name="centerText">%1$s%</string>
     <string name="subTypeText">%1$s</string>
+    <string-array name="titles">
+        <item>Manage bunks</item>
+        <item>Logout</item>
+    </string-array>
+
+    <string-array name="about">
+        <item>Devepoped by: </item>
+        <item>Github Repo: </item>
+    </string-array>
 </resources>

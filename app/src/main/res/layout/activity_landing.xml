@@ -7,7 +7,7 @@
     android:elevation="12dp"
     tools:context="com.example.root.godspeed.Landing">
 
-
+            <include android:id="@+id/appToolBar" layout="@layout/app_bar"/>
 
                 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:tools="http://schemas.android.com/tools"
@@ -55,9 +55,9 @@
                     </FrameLayout>
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="10dp"
+                        android:layout_height="6dp"
                         android:orientation="horizontal"
-                        android:background="#26A69A"
+                        android:background="#96E6B3"
                         android:elevation="30dp"
                         />
 

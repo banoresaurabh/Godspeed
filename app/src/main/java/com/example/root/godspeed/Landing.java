@@ -6,7 +6,9 @@ import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -18,12 +20,17 @@ import java.util.ArrayList;
 public class Landing extends AppCompatActivity {
 
     Typeface roboto;
+    Toolbar tb;
     UtilityFunctions ob = new UtilityFunctions(this);
     public final String THE_BASE_URL = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_landing);
+
+
+        tb = (Toolbar) findViewById(R.id.appToolBar);
+        setSupportActionBar(tb);
 
         roboto = Typeface.createFromAsset(getAssets(),"fonts/Roboto-Regular.ttf");
         //Setting typeface to welcome message
@@ -36,8 +43,20 @@ public class Landing extends AppCompatActivity {
         RoundedImage roundedImage = new RoundedImage(bitmap);
         propic.setImageDrawable(roundedImage);
         LoadDataFromTheScraper task = new LoadDataFromTheScraper();
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu_white_24dp);
+        getSupportActionBar().setHomeButtonEnabled(true);
         task.execute();
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_landing, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+
 
    private class LoadDataFromTheScraper extends AsyncTask<String,Void,ArrayList<Report>>{
 
@@ -56,7 +75,6 @@ public class Landing extends AppCompatActivity {
             report = UtilityFunctions.parseJson(jsonResponse);
             return report;
         }
-
        @Override
        protected void onPostExecute(ArrayList<Report> report) {
            super.onPostExecute(report);

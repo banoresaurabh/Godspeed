@@ -43,9 +43,10 @@
         android:background="#ffff"
         android:id="@+id/editText"
         android:hint="Enter Password"
-        android:layout_centerVertical="true"
         android:textSize="14dp"
-        android:layout_centerHorizontal="true" />
+        android:layout_below="@+id/userid"
+        android:layout_alignStart="@+id/userid"
+        android:layout_marginTop="31dp" />
 
 
 
