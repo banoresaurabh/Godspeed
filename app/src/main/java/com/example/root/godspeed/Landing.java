@@ -1,14 +1,20 @@
 package com.example.root.godspeed;
 
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.method.LinkMovementMethod;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -16,6 +22,7 @@ import android.widget.Toast;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.zip.Inflater;
 
 public class Landing extends AppCompatActivity {
 
@@ -23,23 +30,26 @@ public class Landing extends AppCompatActivity {
     Toolbar tb;
     UtilityFunctions ob = new UtilityFunctions(this);
     public final String THE_BASE_URL = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_landing);
-
-
+        LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+        View v = inflater.inflate(R.layout.info_alert_dialog,null);
+        TextView link = (TextView) v.findViewById(R.id.repo);
+        link.setMovementMethod(LinkMovementMethod.getInstance());
         tb = (Toolbar) findViewById(R.id.appToolBar);
         setSupportActionBar(tb);
 
-        roboto = Typeface.createFromAsset(getAssets(),"fonts/Roboto-Regular.ttf");
+        roboto = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Regular.ttf");
         //Setting typeface to welcome message
         TextView welmsg = (TextView) findViewById(R.id.welMsg);
         welmsg.setTypeface(roboto);
 
         //Rounded Image Implementation
         ImageView propic = (ImageView) findViewById(R.id.proPic);
-        Bitmap bitmap = BitmapFactory.decodeResource(getResources(),R.drawable.f1);
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.f1);
         RoundedImage roundedImage = new RoundedImage(bitmap);
         propic.setImageDrawable(roundedImage);
         LoadDataFromTheScraper task = new LoadDataFromTheScraper();
@@ -51,14 +61,36 @@ public class Landing extends AppCompatActivity {
     }
 
     @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if(id == R.id.action_info){
+            Log.d("--YOOO--","Reached here");
+
+            AlertDialog.Builder alert_d= new AlertDialog.Builder(Landing.this);
+            LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+            View view = inflater.inflate(R.layout.info_alert_dialog,null);
+            alert_d.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    dialogInterface.cancel();
+                }
+            });
+            alert_d.setView(view);
+            AlertDialog alertDialog = alert_d.create();
+            alertDialog.show();
+
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_landing, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
 
-
-   private class LoadDataFromTheScraper extends AsyncTask<String,Void,ArrayList<Report>>{
+    private class LoadDataFromTheScraper extends AsyncTask<String, Void, ArrayList<Report>> {
 
         @Override
         protected ArrayList<Report> doInBackground(String... strings) {
@@ -75,106 +107,103 @@ public class Landing extends AppCompatActivity {
             report = UtilityFunctions.parseJson(jsonResponse);
             return report;
         }
-       @Override
-       protected void onPostExecute(ArrayList<Report> report) {
-           super.onPostExecute(report);
-           if(report == null) return ;
-           updateUI(report);
-       }
 
-       public void updateUI(ArrayList<Report> report){
-           String subTypeName = "";
-           CardGenerator cardGenerator = new CardGenerator();
-           Log.e("--UPDATEUI--"," "+report.size());
-           cardGenerator.linearLayoutMain = (LinearLayout) findViewById(R.id.LLInner);
-
-
-
-        for (int i = 0; i < report.size(); i++){
-            if(report.get(i).subject.trim().equalsIgnoreCase("VERDICT")){
-                subTypeName += "( "+report.get(i).theory.get(0) +"/" +report.get(i).theory.get(1) + " )\n";
-                subTypeName += "   Theory";
-
-                Log.d("--IN LANDING--"," "+report.get(i).theory.size() + " --> "+ i);
-                cardGenerator.generateCard(report.get(i).subject,getApplicationContext());
-                cardGenerator.textForType.setText(subTypeName);
-                String textInCenter = "";
-                textInCenter += report.get(i).theory.get(2).toString() + " %";
-//                 Integer progress = (Integer) (report.get(i).theory.get(2));
-                cardGenerator.progressBarFor.setProgress(60);
-                cardGenerator.textInTheCenter.setText(textInCenter);
-
-                textInCenter = "";
-                subTypeName = "";
-                subTypeName += "  ( "+report.get(i).practical.get(0) +"/" +report.get(i).practical.get(1) + " )\n";
-                subTypeName += "  Practical";
-                cardGenerator.textForTypePR.setText(subTypeName);
-                textInCenter += report.get(i).practical.get(2).toString() + " %";
-                //             progress = (Integer) report.get(i).practical.get(2);
-                cardGenerator.progressBarForPR.setProgress(90);
-                cardGenerator.textInTheCenterPR.setText(textInCenter);
-                break;
-            }
+        @Override
+        protected void onPostExecute(ArrayList<Report> report) {
+            super.onPostExecute(report);
+            if (report == null) return;
+            updateUI(report);
         }
 
+        public void updateUI(ArrayList<Report> report) {
+            String subTypeName = "";
+            CardGenerator cardGenerator = new CardGenerator();
+            Log.e("--UPDATEUI--", " " + report.size());
+            cardGenerator.linearLayoutMain = (LinearLayout) findViewById(R.id.LLInner);
 
 
+            for (int i = 0; i < report.size(); i++) {
+                if (report.get(i).subject.trim().equalsIgnoreCase("VERDICT")) {
+                    subTypeName += "( " + report.get(i).theory.get(0) + "/" + report.get(i).theory.get(1) + " )\n";
+                    subTypeName += "   Theory";
+
+                    Log.d("--IN LANDING--", " " + report.get(i).theory.size() + " --> " + i);
+                    cardGenerator.generateCard(report.get(i).subject, getApplicationContext());
+                    cardGenerator.textForType.setText(subTypeName);
+                    String textInCenter = "";
+                    textInCenter += report.get(i).theory.get(2).toString() + " %";
+//                 Integer progress = (Integer) (report.get(i).theory.get(2));
+                    cardGenerator.progressBarFor.setProgress(60);
+                    cardGenerator.textInTheCenter.setText(textInCenter);
+
+                    textInCenter = "";
+                    subTypeName = "";
+                    subTypeName += "  ( " + report.get(i).practical.get(0) + "/" + report.get(i).practical.get(1) + " )\n";
+                    subTypeName += "  Practical";
+                    cardGenerator.textForTypePR.setText(subTypeName);
+                    textInCenter += report.get(i).practical.get(2).toString() + " %";
+                    //             progress = (Integer) report.get(i).practical.get(2);
+                    cardGenerator.progressBarForPR.setProgress(90);
+                    cardGenerator.textInTheCenterPR.setText(textInCenter);
+                    break;
+                }
+            }
 
 
-           for(int i = 0; i < report.size(); i++) {
-               if (!report.get(i).subject.equalsIgnoreCase("VERDICT")) {
-                   if (report.get(i).theory.size() > 0 && report.get(i).practical.size() > 0) {
-                       cardGenerator.generateCard(report.get(i).subject, getApplicationContext());
-                       String textInCenter = "";
-                       textInCenter += report.get(i).theory.get(2).toString() + " %";
+            for (int i = 0; i < report.size(); i++) {
+                if (!report.get(i).subject.equalsIgnoreCase("VERDICT")) {
+                    if (report.get(i).theory.size() > 0 && report.get(i).practical.size() > 0) {
+                        cardGenerator.generateCard(report.get(i).subject, getApplicationContext());
+                        String textInCenter = "";
+                        textInCenter += report.get(i).theory.get(2).toString() + " %";
 //               Integer progress = (Integer) (report.get(i).theory.get(2));
-                       cardGenerator.progressBarFor.setProgress(60);
-                       cardGenerator.textInTheCenter.setText(textInCenter);
-                       subTypeName = "";
-                       subTypeName += "( "+report.get(i).theory.get(0) +"/" +report.get(i).theory.get(1) + " )\n";
-                       subTypeName += "  Theory";
-                       cardGenerator.textForType.setText(subTypeName);
+                        cardGenerator.progressBarFor.setProgress(60);
+                        cardGenerator.textInTheCenter.setText(textInCenter);
+                        subTypeName = "";
+                        subTypeName += "( " + report.get(i).theory.get(0) + "/" + report.get(i).theory.get(1) + " )\n";
+                        subTypeName += "  Theory";
+                        cardGenerator.textForType.setText(subTypeName);
 
 
-                       textInCenter = "";
-                       subTypeName = "";
-                       subTypeName += "  ( "+report.get(i).practical.get(0) +"/" +report.get(i).practical.get(1) + " )\n";
-                       subTypeName += " Practical";
-                       cardGenerator.textForTypePR.setText(subTypeName);
-                       textInCenter += report.get(i).practical.get(2).toString() + " %";
-                       //             progress = (Integer) report.get(i).practical.get(2);
-                       cardGenerator.progressBarForPR.setProgress(90);
-                       cardGenerator.textInTheCenterPR.setText(textInCenter);
-                   }else {
-                       if(report.get(i).theory.size() > 0 && report.get(i).practical.size() == 0){
-                           cardGenerator.generateCardForSingle(report.get(i).subject, getApplicationContext(),"th");
-                           String textInCenter = "";
-                           textInCenter += report.get(i).theory.get(2).toString() + " %";
+                        textInCenter = "";
+                        subTypeName = "";
+                        subTypeName += "  ( " + report.get(i).practical.get(0) + "/" + report.get(i).practical.get(1) + " )\n";
+                        subTypeName += " Practical";
+                        cardGenerator.textForTypePR.setText(subTypeName);
+                        textInCenter += report.get(i).practical.get(2).toString() + " %";
+                        //             progress = (Integer) report.get(i).practical.get(2);
+                        cardGenerator.progressBarForPR.setProgress(90);
+                        cardGenerator.textInTheCenterPR.setText(textInCenter);
+                    } else {
+                        if (report.get(i).theory.size() > 0 && report.get(i).practical.size() == 0) {
+                            cardGenerator.generateCardForSingle(report.get(i).subject, getApplicationContext(), "th");
+                            String textInCenter = "";
+                            textInCenter += report.get(i).theory.get(2).toString() + " %";
 //               Integer progress = (Integer) (report.get(i).theory.get(2));
-                           cardGenerator.progressBarFor.setProgress(60);
-                           cardGenerator.textInTheCenter.setText(textInCenter);
-                           subTypeName = "";
-                           subTypeName += "( "+report.get(i).theory.get(0) +"/" +report.get(i).theory.get(1) + " )\n";
-                           subTypeName += "  Theory";
-                           cardGenerator.textForType.setText(subTypeName);
+                            cardGenerator.progressBarFor.setProgress(60);
+                            cardGenerator.textInTheCenter.setText(textInCenter);
+                            subTypeName = "";
+                            subTypeName += "( " + report.get(i).theory.get(0) + "/" + report.get(i).theory.get(1) + " )\n";
+                            subTypeName += "  Theory";
+                            cardGenerator.textForType.setText(subTypeName);
 
-                       }else{
-                           cardGenerator.generateCardForSingle(report.get(i).subject, getApplicationContext(),"pr");
-                           String textInCenter = "";
-                           subTypeName = "";
-                           subTypeName += "  ( "+report.get(i).practical.get(0) +"/" +report.get(i).practical.get(1) + " )\n";
-                           subTypeName += " Practical";
-                           cardGenerator.textForTypePR.setText(subTypeName);
-                           textInCenter += report.get(i).practical.get(2).toString() + " %";
-                           //             progress = (Integer) report.get(i).practical.get(2);
-                           cardGenerator.progressBarForPR.setProgress(90);
-                           cardGenerator.textInTheCenterPR.setText(textInCenter);
-                           cardGenerator.textForType.setText("Theory");
-                       }
-                   }
-               }
-           }
+                        } else {
+                            cardGenerator.generateCardForSingle(report.get(i).subject, getApplicationContext(), "pr");
+                            String textInCenter = "";
+                            subTypeName = "";
+                            subTypeName += "  ( " + report.get(i).practical.get(0) + "/" + report.get(i).practical.get(1) + " )\n";
+                            subTypeName += " Practical";
+                            cardGenerator.textForTypePR.setText(subTypeName);
+                            textInCenter += report.get(i).practical.get(2).toString() + " %";
+                            //             progress = (Integer) report.get(i).practical.get(2);
+                            cardGenerator.progressBarForPR.setProgress(90);
+                            cardGenerator.textInTheCenterPR.setText(textInCenter);
+                            cardGenerator.textForType.setText("Theory");
+                        }
+                    }
+                }
+            }
 
-       }
-   }
+        }
+    }
 }

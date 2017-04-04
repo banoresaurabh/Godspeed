@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    android:weightSum="1">
+    <LinearLayout
+        android:orientation="vertical"
+        android:background="@color/DarkCyan"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="About"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/White"
+        android:layout_gravity="center_horizontal"
+        android:textSize="25dp"
+        android:textAlignment="center"
+        android:id="@+id/textView2" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Developed By"
+            android:textStyle="bold"
+            android:id="@+id/heading" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="25dp"
+            android:textAlignment="viewEnd"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Saurabh Banore"
+            android:id="@+id/name" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Github Repo"
+            android:textStyle="bold"
+            android:id="@+id/headingRepo" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="34dp"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textAlignment="viewEnd"
+            android:text="@string/godspeed"
+            android:id="@+id/repo" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp">
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/linkedin"
+            android:layout_marginLeft="60dp"
+            android:id="@+id/linkedIn"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:src="@drawable/github"
+            android:id="@+id/github" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:src="@drawable/facebook"
+            android:id="@+id/facebook" />
+    </LinearLayout>
+
+
+
+</LinearLayout>

@@ -3,23 +3,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.example.root.godspeed.Landing">
     <item
-        android:id="@+id/action_share"
+        android:id="@+id/action_info"
+        android:icon="@drawable/information"
         android:orderInCategory="200"
         android:title="About"
-        android:icon="@drawable/information"
         app:showAsAction="always" />
     <item
-        android:id="@+id/action_info"
+        android:id="@+id/action_exit"
+        android:icon="@drawable/ic_exit_to_app_white_24dp"
         android:orderInCategory="300"
         android:title="Logout"
-        android:icon="@drawable/ic_exit_to_app_white_24dp"
-        app:showAsAction="ifRoom"
-        />
+        app:showAsAction="ifRoom" />
     <item
         android:id="@+id/skull"
+        android:icon="@drawable/skull"
         android:orderInCategory="100"
         android:title="Calculate Attendance"
-        android:icon="@drawable/skull"
-        app:showAsAction="ifRoom"
-        />
+        app:showAsAction="ifRoom" />
 </menu>

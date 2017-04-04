@@ -5,6 +5,8 @@
     <string name="advance_java">Advance java</string>
     <string name="centerText">%1$s%</string>
     <string name="subTypeText">%1$s</string>
+
+    <string name="godspeed"><a href="https://github.com/banoresaurabh/Vroom"> Godspeed </a></string>
     <string-array name="titles">
         <item>Manage bunks</item>
         <item>Logout</item>
