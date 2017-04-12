@@ -1,6 +1,7 @@
 package com.example.root.godspeed;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
@@ -15,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -27,15 +29,25 @@ import java.util.zip.Inflater;
 public class Landing extends AppCompatActivity {
 
     Typeface roboto;
+    FrameLayout fl;
+
+    static int pTotal = 0;
     Toolbar tb;
     UtilityFunctions ob = new UtilityFunctions(this);
-    public final String THE_BASE_URL = "";
+    public String THE_BASE_URL = "http://167f6837.ngrok.io/attendance/?";
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_landing);
         LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+
+        fl = (FrameLayout) findViewById(R.id.fl);
+        fl.setVisibility(View.GONE);
+
+        //Again Toolbar
         View v = inflater.inflate(R.layout.info_alert_dialog,null);
         TextView link = (TextView) v.findViewById(R.id.repo);
         link.setMovementMethod(LinkMovementMethod.getInstance());
@@ -54,10 +66,16 @@ public class Landing extends AppCompatActivity {
         propic.setImageDrawable(roundedImage);
         LoadDataFromTheScraper task = new LoadDataFromTheScraper();
 
+        //Getting values from last activity
+        String username = getIntent().getStringExtra("username");
+        String password = getIntent().getStringExtra("password");
+
+
+        //Toolbar
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu_white_24dp);
+        getSupportActionBar().setHomeAsUpIndicator(R.mipmap.ic_launcher);
         getSupportActionBar().setHomeButtonEnabled(true);
-        task.execute();
+        task.execute(username,password);
     }
 
     @Override
@@ -80,6 +98,16 @@ public class Landing extends AppCompatActivity {
             alertDialog.show();
 
         }
+        if(id == R.id.skull){
+            Log.d("--YOOO--","Reached here");
+
+            Intent intent = new Intent(getApplicationContext(),Estimate.class);
+            intent.putExtra("theoryLectures",UtilityFunctions.theoryCounter + UtilityFunctions.totalTheory);
+            intent.putExtra("pottaTotal",pTotal + UtilityFunctions.theoryCounter);
+            startActivity(intent);
+
+
+        }
         return super.onOptionsItemSelected(item);
     }
 
@@ -95,15 +123,20 @@ public class Landing extends AppCompatActivity {
         @Override
         protected ArrayList<Report> doInBackground(String... strings) {
             ArrayList<Report> report = new ArrayList<>();
-            String jsonResponse = "{\n    \"THEORY OF COMPUTATION \": {\n        \" TUT\": {\n            \"total\": 1,\n            \"percentage\": 100.0,\n            \"present\": 1\n        },\n        \" TH\": {\n            \"total\": 27,\n            \"percentage\": 77.78,\n            \"present\": 21\n        }\n    },\n    \"DESIGN & ANALYSIS OF ALGORITHMS \": {\n        \" PR\": {\n            \"total\": 9,\n            \"percentage\": 100.0,\n            \"present\": 9\n        },\n        \" TUT\": {\n            \"total\": 6,\n            \"percentage\": 83.33,\n            \"present\": 5\n        },\n        \" TH\": {\n            \"total\": 31,\n            \"percentage\": 87.1,\n            \"present\": 27\n        }\n    },\n    \"ADVANCED JAVA \": {\n        \" PR\": {\n            \"total\": 9,\n            \"percentage\": 77.78,\n            \"present\": 7\n        },\n        \" TH\": {\n            \"total\": 33,\n            \"percentage\": 72.73,\n            \"present\": 24\n        }\n    },\n    \"COMPUTER NETWORKS-II \": {\n        \" PR\": {\n            \"total\": 11,\n            \"percentage\": 81.82,\n            \"present\": 9\n        },\n        \" TH\": {\n            \"total\": 37,\n            \"percentage\": 75.68,\n            \"present\": 28\n        }\n    },\n    \"VERDICT\": {\n        \"TUT\": {\n            \"total\": 1,\n            \"percentage\": 100.0,\n            \"present\": 1\n        },\n        \"Tutorial\": {\n            \"total\": 7,\n            \"percentage\": 85.71,\n            \"present\": 6\n        },\n        \"Total\": {\n            \"total\": 237,\n            \"percentage\": 78.48,\n            \"present\": 186\n        },\n        \"Theory\": {\n            \"total\": 182,\n            \"percentage\": 75.27,\n            \"present\": 137\n        },\n        \"Practical\": {\n            \"total\": 48,\n            \"percentage\": 89.58,\n            \"present\": 43\n        }\n    },\n    \"SDL-II MOBILE APPLICATION DEVELOPMENT LAB \": {\n        \" PR\": {\n            \"total\": 11,\n            \"percentage\": 90.91,\n            \"present\": 10\n        },\n        \" TH\": {\n            \"total\": 15,\n            \"percentage\": 53.33,\n            \"present\": 8\n        }\n    },\n    \"SOFTWARE TESTING & QUALITY ASSURANCE \": {\n        \" PR\": {\n            \"total\": 8,\n            \"percentage\": 100.0,\n            \"present\": 8\n        },\n        \" TH\": {\n            \"total\": 39,\n            \"percentage\": 74.36,\n            \"present\": 29\n        }\n    }\n}";
-           /*
+            //String jsonResponse = "{\n    \"THEORY OF COMPUTATION \": {\n        \" TUT\": {\n            \"total\": 1,\n            \"percentage\": 100.0,\n            \"present\": 1\n        },\n        \" TH\": {\n            \"total\": 27,\n            \"percentage\": 77.78,\n            \"present\": 21\n        }\n    },\n    \"DESIGN & ANALYSIS OF ALGORITHMS \": {\n        \" PR\": {\n            \"total\": 9,\n            \"percentage\": 100.0,\n            \"present\": 9\n        },\n        \" TUT\": {\n            \"total\": 6,\n            \"percentage\": 83.33,\n            \"present\": 5\n        },\n        \" TH\": {\n            \"total\": 31,\n            \"percentage\": 87.1,\n            \"present\": 27\n        }\n    },\n    \"ADVANCED JAVA \": {\n        \" PR\": {\n            \"total\": 9,\n            \"percentage\": 77.78,\n            \"present\": 7\n        },\n        \" TH\": {\n            \"total\": 33,\n            \"percentage\": 72.73,\n            \"present\": 24\n        }\n    },\n    \"COMPUTER NETWORKS-II \": {\n        \" PR\": {\n            \"total\": 11,\n            \"percentage\": 81.82,\n            \"present\": 9\n        },\n        \" TH\": {\n            \"total\": 37,\n            \"percentage\": 75.68,\n            \"present\": 28\n        }\n    },\n    \"VERDICT\": {\n        \"TUT\": {\n            \"total\": 1,\n            \"percentage\": 100.0,\n            \"present\": 1\n        },\n        \"Tutorial\": {\n            \"total\": 7,\n            \"percentage\": 85.71,\n            \"present\": 6\n        },\n        \"Total\": {\n            \"total\": 237,\n            \"percentage\": 78.48,\n            \"present\": 186\n        },\n        \"Theory\": {\n            \"total\": 182,\n            \"percentage\": 75.27,\n            \"present\": 137\n        },\n        \"Practical\": {\n            \"total\": 48,\n            \"percentage\": 89.58,\n            \"present\": 43\n        }\n    },\n    \"SDL-II MOBILE APPLICATION DEVELOPMENT LAB \": {\n        \" PR\": {\n            \"total\": 11,\n            \"percentage\": 90.91,\n            \"present\": 10\n        },\n        \" TH\": {\n            \"total\": 15,\n            \"percentage\": 53.33,\n            \"present\": 8\n        }\n    },\n    \"SOFTWARE TESTING & QUALITY ASSURANCE \": {\n        \" PR\": {\n            \"total\": 8,\n            \"percentage\": 100.0,\n            \"present\": 8\n        },\n        \" TH\": {\n            \"total\": 39,\n            \"percentage\": 74.36,\n            \"present\": 29\n        }\n    }\n}";
+            THE_BASE_URL += "username="+strings[0] + "&password="+strings[1];
+            THE_BASE_URL = THE_BASE_URL.replaceAll(" ","%20");
+            Log.d("--AKHIR--",""+THE_BASE_URL);
+            String jsonResponse = "";
             URL url = UtilityFunctions.makeURL(THE_BASE_URL);
             try{
                 jsonResponse = UtilityFunctions.makeHttpRequest(url);
+                Log.d("--AKHIRKAR--",""+jsonResponse);
             }catch (Exception ex){
-                Toast.makeText(getApplicationContext(),"Some error occurred in doInBackground",Toast.LENGTH_LONG).show();
+
+//                Toast.makeText(getApplicationContext(),"Some error occurred in doInBackground",Toast.LENGTH_LONG).show();
                 return null;
-            }*/
+            }
             report = UtilityFunctions.parseJson(jsonResponse);
             return report;
         }
@@ -116,67 +149,48 @@ public class Landing extends AppCompatActivity {
         }
 
         public void updateUI(ArrayList<Report> report) {
-            String subTypeName = "";
-            CardGenerator cardGenerator = new CardGenerator();
-            Log.e("--UPDATEUI--", " " + report.size());
-            cardGenerator.linearLayoutMain = (LinearLayout) findViewById(R.id.LLInner);
+            if (report != null) {
 
 
-            for (int i = 0; i < report.size(); i++) {
-                if (report.get(i).subject.trim().equalsIgnoreCase("VERDICT")) {
-                    subTypeName += "( " + report.get(i).theory.get(0) + "/" + report.get(i).theory.get(1) + " )\n";
-                    subTypeName += "   Theory";
-
-                    Log.d("--IN LANDING--", " " + report.get(i).theory.size() + " --> " + i);
-                    cardGenerator.generateCard(report.get(i).subject, getApplicationContext());
-                    cardGenerator.textForType.setText(subTypeName);
-                    String textInCenter = "";
-                    textInCenter += report.get(i).theory.get(2).toString() + " %";
-//                 Integer progress = (Integer) (report.get(i).theory.get(2));
-                    cardGenerator.progressBarFor.setProgress(60);
-                    cardGenerator.textInTheCenter.setText(textInCenter);
-
-                    textInCenter = "";
-                    subTypeName = "";
-                    subTypeName += "  ( " + report.get(i).practical.get(0) + "/" + report.get(i).practical.get(1) + " )\n";
-                    subTypeName += "  Practical";
-                    cardGenerator.textForTypePR.setText(subTypeName);
-                    textInCenter += report.get(i).practical.get(2).toString() + " %";
-                    //             progress = (Integer) report.get(i).practical.get(2);
-                    cardGenerator.progressBarForPR.setProgress(90);
-                    cardGenerator.textInTheCenterPR.setText(textInCenter);
-                    break;
-                }
-            }
+                String subTypeName = "";
+                CardGenerator cardGenerator = new CardGenerator();
+                Log.e("--UPDATEUI--", " " + report.size());
+                cardGenerator.linearLayoutMain = (LinearLayout) findViewById(R.id.LLInner);
 
 
-            for (int i = 0; i < report.size(); i++) {
-                if (!report.get(i).subject.equalsIgnoreCase("VERDICT")) {
-                    if (report.get(i).theory.size() > 0 && report.get(i).practical.size() > 0) {
+                for (int i = 0; i < report.size(); i++) {
+                    if (report.get(i).subject.trim().equalsIgnoreCase("VERDICT")) {
+                        pTotal = (int) report.get(i).theory.get(0);
+                        subTypeName += "( " + report.get(i).theory.get(0) + "/" + report.get(i).theory.get(1) + " )\n";
+                        subTypeName += "   Theory";
+
+                        Log.d("--IN LANDING--", " " + report.get(i).theory.size() + " --> " + i);
                         cardGenerator.generateCard(report.get(i).subject, getApplicationContext());
+                        cardGenerator.textForType.setText(subTypeName);
                         String textInCenter = "";
                         textInCenter += report.get(i).theory.get(2).toString() + " %";
-//               Integer progress = (Integer) (report.get(i).theory.get(2));
+//                 Integer progress = (Integer) (report.get(i).theory.get(2));
                         cardGenerator.progressBarFor.setProgress(60);
                         cardGenerator.textInTheCenter.setText(textInCenter);
-                        subTypeName = "";
-                        subTypeName += "( " + report.get(i).theory.get(0) + "/" + report.get(i).theory.get(1) + " )\n";
-                        subTypeName += "  Theory";
-                        cardGenerator.textForType.setText(subTypeName);
-
 
                         textInCenter = "";
                         subTypeName = "";
                         subTypeName += "  ( " + report.get(i).practical.get(0) + "/" + report.get(i).practical.get(1) + " )\n";
-                        subTypeName += " Practical";
+                        subTypeName += "  Practical";
                         cardGenerator.textForTypePR.setText(subTypeName);
                         textInCenter += report.get(i).practical.get(2).toString() + " %";
                         //             progress = (Integer) report.get(i).practical.get(2);
                         cardGenerator.progressBarForPR.setProgress(90);
                         cardGenerator.textInTheCenterPR.setText(textInCenter);
-                    } else {
-                        if (report.get(i).theory.size() > 0 && report.get(i).practical.size() == 0) {
-                            cardGenerator.generateCardForSingle(report.get(i).subject, getApplicationContext(), "th");
+                        break;
+                    }
+                }
+
+
+                for (int i = 0; i < report.size(); i++) {
+                    if (!report.get(i).subject.equalsIgnoreCase("VERDICT")) {
+                        if (report.get(i).theory.size() > 0 && report.get(i).practical.size() > 0) {
+                            cardGenerator.generateCard(report.get(i).subject, getApplicationContext());
                             String textInCenter = "";
                             textInCenter += report.get(i).theory.get(2).toString() + " %";
 //               Integer progress = (Integer) (report.get(i).theory.get(2));
@@ -187,9 +201,8 @@ public class Landing extends AppCompatActivity {
                             subTypeName += "  Theory";
                             cardGenerator.textForType.setText(subTypeName);
 
-                        } else {
-                            cardGenerator.generateCardForSingle(report.get(i).subject, getApplicationContext(), "pr");
-                            String textInCenter = "";
+
+                            textInCenter = "";
                             subTypeName = "";
                             subTypeName += "  ( " + report.get(i).practical.get(0) + "/" + report.get(i).practical.get(1) + " )\n";
                             subTypeName += " Practical";
@@ -198,12 +211,37 @@ public class Landing extends AppCompatActivity {
                             //             progress = (Integer) report.get(i).practical.get(2);
                             cardGenerator.progressBarForPR.setProgress(90);
                             cardGenerator.textInTheCenterPR.setText(textInCenter);
-                            cardGenerator.textForType.setText("Theory");
+                        } else {
+                            if (report.get(i).theory.size() > 0 && report.get(i).practical.size() == 0) {
+                                cardGenerator.generateCardForSingle(report.get(i).subject, getApplicationContext(), "th");
+                                String textInCenter = "";
+                                textInCenter += report.get(i).theory.get(2).toString() + " %";
+//               Integer progress = (Integer) (report.get(i).theory.get(2));
+                                cardGenerator.progressBarFor.setProgress(60);
+                                cardGenerator.textInTheCenter.setText(textInCenter);
+                                subTypeName = "";
+                                subTypeName += "( " + report.get(i).theory.get(0) + "/" + report.get(i).theory.get(1) + " )\n";
+                                subTypeName += "  Theory";
+                                cardGenerator.textForType.setText(subTypeName);
+
+                            } else {
+                                cardGenerator.generateCardForSingle(report.get(i).subject, getApplicationContext(), "pr");
+                                String textInCenter = "";
+                                subTypeName = "";
+                                subTypeName += "  ( " + report.get(i).practical.get(0) + "/" + report.get(i).practical.get(1) + " )\n";
+                                subTypeName += " Practical";
+                                cardGenerator.textForTypePR.setText(subTypeName);
+                                textInCenter += report.get(i).practical.get(2).toString() + " %";
+                                //             progress = (Integer) report.get(i).practical.get(2);
+                                cardGenerator.progressBarForPR.setProgress(90);
+                                cardGenerator.textInTheCenterPR.setText(textInCenter);
+                                cardGenerator.textForType.setText("Theory");
+                            }
                         }
                     }
                 }
-            }
 
+            }
         }
     }
 }

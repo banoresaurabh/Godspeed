@@ -23,6 +23,9 @@ import java.util.Iterator;
  */
 public class UtilityFunctions {
 
+    static int theoryCounter = 0;
+    static int totalTheory = 0;
+
     public static Context context;
 
     public UtilityFunctions(Context context){
@@ -37,9 +40,11 @@ public class UtilityFunctions {
         try {
             httpURLConnection = (HttpURLConnection) url.openConnection();
             httpURLConnection.setRequestMethod("GET");
-            httpURLConnection.setConnectTimeout(15000);
-            httpURLConnection.setReadTimeout(15000);
+           // httpURLConnection.setConnectTimeout(15000);
+            //httpURLConnection.setReadTimeout(15000);
             httpURLConnection.connect();
+            Log.d("--AKHIRinhttp--",httpURLConnection.getResponseCode()+"");
+
 
             if(httpURLConnection.getResponseCode() == 200){
                 inputStream = httpURLConnection.getInputStream();
@@ -49,7 +54,7 @@ public class UtilityFunctions {
             }
 
         }catch(IOException e){
-            Log.e(LOG_TAG,"IOException occurred");
+            Log.e("--AKHIR--","IOException occurred");
             return null;
         }finally {
             if(httpURLConnection != null ){
@@ -134,6 +139,9 @@ public class UtilityFunctions {
                                 theoryList.add(present);
                                 theoryList.add(total);
                                 theoryList.add(percentage);
+                                theoryCounter += 45 - total;
+                                totalTheory += total;
+
                             } else if (type.equalsIgnoreCase(HCPrac)) {
                                 practicalList.add(present);
                                 practicalList.add(total);
@@ -181,22 +189,4 @@ public class UtilityFunctions {
         return report;
     }
 }
-/*
-*
-                if(jsonPerSubject.has("TH")){
-                    theory = Double.parseDouble(jsonPerSubject.get("TH").toString());
-                }else {
-                    theory = null;
-                }
 
-                if(jsonPerSubject.has("PR")){
-                    prac = Double.parseDouble(jsonPerSubject.get("PR").toString());
-                }else {
-                    prac = null;
-                }
-
-                if(jsonPerSubject.has("TUT")){
-                    tut = Double.parseDouble(jsonPerSubject.get("TUT").toString());
-                }else {
-                    tut = null;
-                }*/
