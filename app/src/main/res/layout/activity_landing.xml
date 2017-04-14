@@ -7,7 +7,9 @@
     android:elevation="12dp"
     tools:context="com.example.root.godspeed.Landing">
 
-            <include android:id="@+id/appToolBar" layout="@layout/app_bar"/>
+
+            <include android:id="@+id/appToolBar" layout="@layout/app_bar"
+                />
 
                 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:tools="http://schemas.android.com/tools"
@@ -22,6 +24,7 @@
                         android:layout_height="wrap_content"
                         android:clipToPadding="false"
                         android:id="@+id/fl"
+                        android:visibility="gone"
                         android:background="@color/White"
                         >
                         <ImageView
@@ -62,6 +65,9 @@
                         android:elevation="30dp"
                         />
 
+
+
+
                     <ScrollView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -77,6 +83,22 @@
                             android:elevation="12dp"
                             tools:context="com.example.root.godspeed.Landing">
 
+                            <ProgressBar
+                                style="?android:attr/progressBarStyleLarge"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/pb"
+                                android:layout_gravity="center_horizontal"
+                                android:layout_marginTop="170dp"
+                                android:visibility="gone"/>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:visibility="gone"
+                                android:id="@+id/errorText"
+                                android:layout_marginTop="200dp"
+                                android:layout_marginLeft="20dp"
+                                />
 
                         </LinearLayout>
 

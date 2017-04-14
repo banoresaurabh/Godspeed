@@ -1,6 +1,7 @@
 package com.example.root.godspeed;
 
 import android.graphics.Typeface;
+import android.icu.text.DecimalFormat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -34,6 +35,7 @@ public class Estimate extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 try {
                     int x;
                     int lect = Integer.parseInt(lectures.getText().toString());
@@ -42,15 +44,16 @@ public class Estimate extends AppCompatActivity {
                     uske -= lect;
 
 
-
+                    x = 246;
+                    uske = 197 - lect;
                     if(lect < x){
                         double ans = (double) uske/ x * 100;
-                        res.setText(Math.round(ans)+" %");
+                        res.setText((Math.round(ans * 100.0)/100.0)+" %");
                         supp.setText("is the approximate attendance you'll be having after bunking "+lect+" lectures.");
 
 
                     }else {
-                        res.setText("Please enter a valid number of lectures!!");
+                        supp.setText("Please enter a valid number of lectures!!");
                     }
 
                 }catch (Exception ex){

@@ -23,8 +23,8 @@ import java.util.Iterator;
  */
 public class UtilityFunctions {
 
-    static int theoryCounter = 0;
-    static int totalTheory = 0;
+    static int theoryCounter = 197;
+    static int totalTheory = 246;
 
     public static Context context;
 
@@ -40,8 +40,8 @@ public class UtilityFunctions {
         try {
             httpURLConnection = (HttpURLConnection) url.openConnection();
             httpURLConnection.setRequestMethod("GET");
-           // httpURLConnection.setConnectTimeout(15000);
-            //httpURLConnection.setReadTimeout(15000);
+            httpURLConnection.setConnectTimeout(15000);
+            httpURLConnection.setReadTimeout(15000);
             httpURLConnection.connect();
             Log.d("--AKHIRinhttp--",httpURLConnection.getResponseCode()+"");
 
@@ -102,7 +102,7 @@ public class UtilityFunctions {
     }
 
     public static ArrayList<Report> parseJson(String jsonResponse){
-
+        if(jsonResponse == null) return null;
         ArrayList<Report> report = new ArrayList<>();
         double percentage;
         int present,total;
@@ -139,8 +139,8 @@ public class UtilityFunctions {
                                 theoryList.add(present);
                                 theoryList.add(total);
                                 theoryList.add(percentage);
-                                theoryCounter += 45 - total;
-                                totalTheory += total;
+                               // theoryCounter += 45 - total;
+                                //totalTheory += total;
 
                             } else if (type.equalsIgnoreCase(HCPrac)) {
                                 practicalList.add(present);
@@ -184,6 +184,7 @@ public class UtilityFunctions {
         } catch (JSONException e) {
             e.printStackTrace();
             Log.d("--Exception--","hello");
+            return null;
         }
 
         return report;

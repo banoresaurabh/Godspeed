@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
+    android:background="#0091EA"
     tools:context="com.example.root.godspeed.Estimate">
 
 
@@ -11,7 +11,6 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/estimate_gradient"
         android:layout_centerHorizontal="true">
         <LinearLayout
             android:layout_width="match_parent"
@@ -41,6 +40,7 @@
             android:layout_marginTop="100dp"
             android:layout_gravity="center"
             android:textSize="17dp"
+            android:layout_marginLeft="15dp"
             android:text="Enter The number of lectures you want to bunk"
             android:id="@+id/preamble" />
 
@@ -59,14 +59,16 @@
             android:text="Go"
             android:elevation="20dp"
             android:id="@+id/goBtn"
+            android:background="@drawable/yellowgradient"
             android:layout_gravity="center_horizontal" />
 
 
                <TextView
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
-                   android:textSize="100dp"
+                   android:textSize="70dp"
                    android:id="@+id/res"
+                   android:layout_marginTop="20dp"
                    android:layout_marginLeft="85dp"
                    android:layout_gravity="center_vertical"
                    android:textColor="@color/White"/>
@@ -76,6 +78,8 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/White"
                     android:id="@+id/supp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginLeft="15dp"
                     />
 
     </LinearLayout>
