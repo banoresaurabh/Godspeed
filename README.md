@@ -1,0 +1,2 @@
+# Godspeed
+Godspeed is an Android application based on web scraping for the students of JNEC, Aurangabad It needs your user ID and password to log into your ERP account where all the attendance record is maintained, then it scrapes the data and represents in into your mobiles in a consistent and atrractive UI, using this data it also helps you to manage your bunks safely by notifying the number of safe bunks left. 
