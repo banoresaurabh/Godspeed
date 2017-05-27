@@ -44,7 +44,7 @@ public class Landing extends AppCompatActivity {
     static int pTotal = 0;
     Toolbar tb;
     UtilityFunctions ob = new UtilityFunctions(this);
-    public String THE_BASE_URL = "http://8846585a.ngrok.io/attendance/?";
+    public String THE_BASE_URL = "http://ca27cfd0.ngrok.io/attendance/?";
     DatabaseOperations db;
 
 
